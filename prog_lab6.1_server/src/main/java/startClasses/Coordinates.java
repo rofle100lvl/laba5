@@ -1,19 +1,17 @@
 package startClasses;
 
+import annotations.NotNull;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import java.io.Serializable;
+
 
 /**
  * Начальный класс координат
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Coordinates {
-    @XmlElement
+public class Coordinates implements Serializable {
     private float x;
 
-    @XmlElement
+    @NotNull
     private Float y; //Поле не может быть null
 
 

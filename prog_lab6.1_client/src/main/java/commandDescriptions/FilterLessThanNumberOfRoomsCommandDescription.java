@@ -9,4 +9,8 @@ public class FilterLessThanNumberOfRoomsCommandDescription extends CommandDescri
         super(CommandName.FILTERLESSTHANNUMBEROFROOMS);
         this.numberOfRooms = numberOfRooms;
     }
+
+    public int getNumberOfRooms() {
+        return numberOfRooms;
+    }
 }

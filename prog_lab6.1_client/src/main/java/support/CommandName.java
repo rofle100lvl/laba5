@@ -26,6 +26,10 @@ public enum CommandName {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static CommandName findByName(String name) throws UnknownCommandNameException {
         for (CommandName commandName :
                 values()) {

@@ -1,6 +1,9 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.ShowCommandDescription;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
@@ -8,23 +11,13 @@ import utils.UserAsker;
  */
 
 public class ShowCommand extends AbstractCommand {
-    public ShowCommand(UserAsker userAsker, Flats flats)
-    {
-        super("show", "Выводит элементы коллекции");
-        setFlats(flats);
-        setUserAsker(userAsker);
-        setCountOfArguments(0);
+    public ShowCommand(CollectionManager collectionManager) {
+        super("show", "Выводит элементы коллекции", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
     @Override
-    public boolean execute(String argument) {
-        flats.show();
-        return true;
-
+    public Request execute(CommandDescription commandDescription) {
+        ShowCommandDescription showCommandDescription = (ShowCommandDescription) commandDescription;
+        return new Request(200, getCollectionManager().show());
     }
 }

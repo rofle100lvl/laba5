@@ -2,12 +2,13 @@ package startClasses;
 
 import annotations.NotNull;
 
+import java.io.Serializable;
 
 
 /**
  * Начальный класс координат
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
     private float x;
 
     @NotNull

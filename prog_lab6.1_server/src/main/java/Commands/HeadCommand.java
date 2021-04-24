@@ -1,28 +1,23 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.HeadDescription;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
  * Класс команды вывода первого элемента коллекции
  */
 public class HeadCommand extends AbstractCommand {
-    public HeadCommand(UserAsker userAsker,Flats flats) {
-        super("head", "Вывод первого элемента коллекции");
-        setUserAsker(userAsker);
-        setFlats(flats);
-        setCountOfArguments(0);
+    public HeadCommand(CollectionManager collectionManager) {
+        super("head", "Вывод первого элемента коллекции", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
 
     @Override
-    public boolean execute(String argument) {
-        flats.head();
-        return true;
+    public Request execute(CommandDescription commandDescription) {
+        HeadDescription headDescription = (HeadDescription) commandDescription;
+        return new Request(200, getCollectionManager().head());
     }
 }

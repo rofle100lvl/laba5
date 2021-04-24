@@ -2,6 +2,7 @@ package Commands;
 
 import commandDescriptions.CommandDescription;
 import utils.CollectionManager;
+import utils.Request;
 
 public abstract class AbstractCommand {
     /**
@@ -18,10 +19,22 @@ public abstract class AbstractCommand {
      */
     private final CollectionManager collectionManager;
 
-    public AbstractCommand(CommandDescription commandDescription, String description, CollectionManager collectionManager) {
-        this.name = commandDescription.getName().name();
+    public AbstractCommand(String name,String description, CollectionManager collectionManager) {
+        this.name = name;
         this.description = description;
         this.collectionManager = collectionManager;
     }
-    abstract public boolean execute(CommandDescription commandDescription);
+    abstract public Request execute(CommandDescription commandDescription);
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public CollectionManager getCollectionManager() {
+        return collectionManager;
+    }
 }

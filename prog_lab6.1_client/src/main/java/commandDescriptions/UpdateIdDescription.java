@@ -5,12 +5,19 @@ import support.CommandName;
 
 public class UpdateIdDescription extends CommandDescription{
     Flat flat;
-    int id;
+    Long id;
 
-    public UpdateIdDescription(CommandName name, Flat flat,int id) {
-        super(name);
+    public UpdateIdDescription(Flat flat,Long id) {
+        super(CommandName.UPDATEID);
         this.flat=flat;
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public Flat getFlat() {
+        return flat;
+    }
 }

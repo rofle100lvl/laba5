@@ -1,27 +1,32 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.AddDescription;
+import commandDescriptions.ClearDescription;
+import commandDescriptions.CommandDescription;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
  * Класс команды чистки коллекции
  */
 public class ClearCommand extends AbstractCommand {
-    public ClearCommand(UserAsker userAsker, Flats flats)
-    {
-        super("clear", "Очистка коллекции");
-        setFlats(flats);
-        setUserAsker(userAsker);
-        setCountOfArguments(0);
+    public ClearCommand(CollectionManager collectionManager) {
+        super("clear", "Добавляет новый элемент в коллекцию", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
     @Override
-    public boolean execute(String argument) {
-        return flats.clear();
+    public Request execute(CommandDescription commandDescription) {
+        ClearDescription clearDescription = (ClearDescription) commandDescription;
+        Request request;
+        if(getCollectionManager().clear()){
+            request = new Request(200,"Коллекция успешно очищена");
+        }
+        else {
+            request = new Request(200,"Коллекция пустая");
+        }
+        return request;
     }
+
+
 }

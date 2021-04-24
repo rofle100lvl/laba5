@@ -6,8 +6,8 @@ import support.CommandName;
 public class AddIfMaxDescription extends CommandDescription{
     Flat flat;
 
-    public AddIfMaxDescription(CommandName name,Flat flat) {
-        super(name);
+    public AddIfMaxDescription(Flat flat) {
+        super(CommandName.ADDIFMAX);
         this.flat = flat;
 
     }

@@ -1,24 +1,25 @@
 package startClasses;
 
+import annotations.GreaterThan;
+import annotations.NotNull;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import java.io.Serializable;
+
 
 /**
  * Начальный класс домов
  */
-@XmlAccessorType(XmlAccessType.FIELD)
-public class House {
-    @XmlElement
+public class House implements Serializable {
+    @NotNull
     private String name; //Поле не может быть null
-    @XmlElement
+    @GreaterThan(num=0)
     private Long year; //Значение поля должно быть больше 0
-    @XmlElement
+    @NotNull
+    @GreaterThan(num=0)
     private Integer numberOfFloors; //Поле не может быть null, Значение поля должно быть больше 0
-    @XmlElement
+    @GreaterThan(num=0)
     private int numberOfFlatsOnFloor; //Значение поля должно быть больше 0
-    @XmlElement
+    @GreaterThan(num=0)
     private Long numberOfLifts; //Значение поля должно быть больше 0
 
     public House() {

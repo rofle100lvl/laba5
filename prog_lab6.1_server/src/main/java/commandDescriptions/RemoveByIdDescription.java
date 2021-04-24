@@ -3,9 +3,13 @@ package commandDescriptions;
 import support.CommandName;
 
 public class RemoveByIdDescription extends CommandDescription{
-    int id;
-    public RemoveByIdDescription(CommandName name, int id) {
-        super(name);
+    long id;
+    public RemoveByIdDescription(long id) {
+        super(CommandName.REMOVEBYID);
         this.id = id;
+    }
+
+    public long getId() {
+        return id;
     }
 }

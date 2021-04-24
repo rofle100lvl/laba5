@@ -1,31 +1,24 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.RemoveHeadDescription;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
  * Класс команды, выводящей первый элемент и удаляющей его
  */
 public class RemoveHeadCommand extends AbstractCommand {
-    public RemoveHeadCommand(UserAsker userAsker,Flats flats) {
+    public RemoveHeadCommand(CollectionManager collectionManager) {
 
-        super("remove_head", "Вывод первого элемента коллекции и удаление его");
-        setUserAsker(userAsker);
-        setFlats(flats);
-        setCountOfArguments(0);
+        super("remove_head", "Вывод первого элемента коллекции и удаление его", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
+
     @Override
-    public boolean execute(String argument) {
-        if (flats.getFlats().size() > 0) {
-            flats.head();
-            flats.getFlats().removeFirst();
-            return true;
-        } else return false;
+    public Request execute(CommandDescription commandDescription) {
+        RemoveHeadDescription removeHeadDescription = (RemoveHeadDescription) commandDescription;
+        return new Request(200, getCollectionManager().removeHead());
     }
 }

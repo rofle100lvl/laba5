@@ -7,8 +7,12 @@ import support.CommandName;
 public class AddDescription extends CommandDescription{
     Flat flat;
 
-    public AddDescription(CommandName name,Flat flat) {
-        super(name);
+    public AddDescription(Flat flat) {
+        super(CommandName.ADD);
         this.flat=flat;
+    }
+
+    public Flat getFlat() {
+        return flat;
     }
 }

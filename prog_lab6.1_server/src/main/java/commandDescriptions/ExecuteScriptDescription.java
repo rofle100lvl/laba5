@@ -5,8 +5,8 @@ import support.CommandName;
 public class ExecuteScriptDescription extends CommandDescription
 {
     String file;
-    public ExecuteScriptDescription(CommandName name, String file) {
-        super(name);
+    public ExecuteScriptDescription(String file) {
+        super(CommandName.EXECUTESCRIPT);
         this.file = file;
     }
 }

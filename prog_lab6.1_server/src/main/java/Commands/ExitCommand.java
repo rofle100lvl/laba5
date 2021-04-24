@@ -1,21 +1,24 @@
 package Commands;
 
+import commandDescriptions.AddDescription;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.ExitDescription;
+import utils.CollectionManager;
+import utils.Request;
+
 /**
  * Класс команды выхода из программы
  */
 public class ExitCommand extends AbstractCommand {
-    public ExitCommand() {
-        super("exit", "Завершение программы");
-        setCountOfArguments(0);
+    public ExitCommand(CollectionManager collectionManager) {
+        super("exit", "Завершение программы", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
+
     @Override
-    public boolean execute(String argument) {
-        return true;
+    public Request execute(CommandDescription commandDescription) {
+        ExitDescription exitDescription = (ExitDescription) commandDescription;
+        System.out.println(exitDescription.getName().name());
+        return new Request(200,"ExitCommand");
     }
 }

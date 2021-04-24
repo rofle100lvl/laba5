@@ -3,7 +3,7 @@ package commandDescriptions;
 import support.CommandName;
 
 public class ClearDescription extends CommandDescription{
-    public ClearDescription(CommandName name) {
-        super(name);
+    public ClearDescription() {
+        super(CommandName.CLEAR);
     }
 }

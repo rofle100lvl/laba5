@@ -1,7 +1,10 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.PrintFieldDescendingDescription;
 import startClasses.Flat;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
@@ -9,29 +12,18 @@ import utils.UserAsker;
  */
 
 public class PrintFieldDescendingHouseCommand extends AbstractCommand {
-    public PrintFieldDescendingHouseCommand(UserAsker userAsker, Flats flats) {
-        super("print_field_descending_house", "Выводит значения поля house всех элементов в порядке убывания");
-        setUserAsker(userAsker);
-        setFlats(flats);
-        setCountOfArguments(0);
+    public PrintFieldDescendingHouseCommand(CollectionManager collectionManager) {
+        super("print_field_descending_house", "Выводит значения поля house всех элементов в " +
+                "порядке убывания", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
-    @Override
-    public boolean execute(String argument) {
-        if(flats.getFlats().size()==0){
-            System.out.println("Коллекция пуста");
-            return true;
-        }
-        flats.sort();
-        for(Flat flat: flats.getFlats()){
-            System.out.println(flat.getHouse().toString());
-        }
-        return true;
 
+    @Override
+    public Request execute(CommandDescription commandDescription) {
+        PrintFieldDescendingDescription printFieldDescendingHouseCommand =
+                (PrintFieldDescendingDescription) commandDescription;
+        getCollectionManager().sort();
+
+        return new Request(200, getCollectionManager().getFieldDescendingHouse());
     }
 }

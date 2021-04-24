@@ -5,6 +5,7 @@ import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  */
 
 
-public class Flat implements Comparable<Flat>{
+public class Flat implements Comparable<Flat>, Serializable {
     private static Long count = 0l;
 
     @NotNull

@@ -3,11 +3,13 @@ package startClasses;
 import annotations.GreaterThan;
 import annotations.NotNull;
 
+import java.io.Serializable;
+
 
 /**
  * Начальный класс домов
  */
-public class House {
+public class House implements Serializable {
     @NotNull
     private String name; //Поле не может быть null
     @GreaterThan(num=0)

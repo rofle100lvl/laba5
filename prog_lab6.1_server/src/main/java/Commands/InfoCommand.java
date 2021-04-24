@@ -1,28 +1,23 @@
 package Commands;
 
-import CollectionManager.Flats;
+import commandDescriptions.CommandDescription;
+import commandDescriptions.InfoCommandDescription;
+import utils.CollectionManager;
+import utils.Request;
 import utils.UserAsker;
 
 /**
  * Класс команды выхода информации о коллекции
  */
 public class InfoCommand extends AbstractCommand{
-    public InfoCommand(UserAsker userAsker,Flats flats)
-    {
-        super("info", "Выводит информацию о коллекции");
-        setFlats(flats);
-        setUserAsker(userAsker);
-        setCountOfArguments(0);
+    public InfoCommand(CollectionManager collectionManager) {
+        super("info", "Выводит информацию о коллекции", collectionManager);
     }
 
-    /**
-     * Метод запускающий команду
-     * @param argument Запрос пользователя
-     * @return Возвращает true, если команда обработана
-     */
+
     @Override
-    public boolean execute(String argument) {
-        flats.getInfo();
-        return true;
+    public Request execute(CommandDescription commandDescription) {
+        InfoCommandDescription infoCommandDescription = (InfoCommandDescription) commandDescription;
+        return new Request(200, getCollectionManager().getInfo());
     }
 }

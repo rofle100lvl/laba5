@@ -22,6 +22,10 @@ public enum CommandName {
 
     private final String name;
 
+    public String getName() {
+        return name;
+    }
+
     CommandName(String name) {
         this.name = name;
     }
