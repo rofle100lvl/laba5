@@ -2,7 +2,7 @@ package Commands;
 
 import commandDescriptions.CommandDescription;
 import utils.CollectionManager;
-import utils.Request;
+import utils.Response;
 
 public abstract class AbstractCommand {
     /**
@@ -24,7 +24,7 @@ public abstract class AbstractCommand {
         this.description = description;
         this.collectionManager = collectionManager;
     }
-    abstract public Request execute(CommandDescription commandDescription);
+    abstract public Response execute(CommandDescription commandDescription);
 
     public String getName() {
         return name;

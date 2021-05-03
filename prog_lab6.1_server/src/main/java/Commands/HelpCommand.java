@@ -1,10 +1,9 @@
 package Commands;
 
 import commandDescriptions.CommandDescription;
-import commandDescriptions.HeadDescription;
 import commandDescriptions.HelpCommandDescription;
 import utils.CollectionManager;
-import utils.Request;
+import utils.Response;
 
 import java.util.stream.Collectors;
 
@@ -15,9 +14,9 @@ public class HelpCommand extends AbstractCommand{
 
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         HelpCommandDescription helpCommandDescription = (HelpCommandDescription) commandDescription;
-        return new Request(200, getCollectionManager().getCommandManager().getCommands().stream()
+        return new Response(200, getCollectionManager().getCommandManager().getCommands().stream()
                 .map(c -> c.getName() + " " + c.getDescription())
                 .collect(Collectors.joining("\n")));
     }

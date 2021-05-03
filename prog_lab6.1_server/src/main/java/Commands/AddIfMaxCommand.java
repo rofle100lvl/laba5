@@ -2,15 +2,8 @@ package Commands;
 
 import commandDescriptions.AddIfMaxDescription;
 import commandDescriptions.CommandDescription;
-import startClasses.Coordinates;
-import startClasses.Flat;
-import startClasses.House;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
-
-import java.io.BufferedReader;
-import java.io.IOException;
+import utils.Response;
 
 /**
  * Класс команды добавления экземпляра в коллекцию, если он максимальный
@@ -23,9 +16,9 @@ public class AddIfMaxCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         AddIfMaxDescription addIfMaxDescription = (AddIfMaxDescription) commandDescription;
         System.out.println(addIfMaxDescription.getName().name());
-        return new Request(200,"AddIfMax");
+        return new Response(200,"AddIfMax");
     }
 }

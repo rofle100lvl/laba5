@@ -3,8 +3,7 @@ package Commands;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.RemoveByIdDescription;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды, удаляющей элемент с заданным id
@@ -15,13 +14,13 @@ public class RemoveByIdCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         RemoveByIdDescription removeByIdDescription = (RemoveByIdDescription) commandDescription;
-        Request request;
+        Response response;
         if(getCollectionManager().removeId(removeByIdDescription.getId()))
-            request = new Request(200,"Элемент успешно удалён.");
-        else request = new Request(200,"Элемент с данным id отсутствует в коллекции");
-        return request;
+            response = new Response(200,"Элемент успешно удалён.");
+        else response = new Response(200,"Элемент с данным id отсутствует в коллекции");
+        return response;
     }
 
 

@@ -71,7 +71,7 @@ public class CommandManager {
     }
 
 
-    public Request launchCommand(CommandDescription commandDescription){
+    public Response launchCommand(CommandDescription commandDescription){
         Optional<AbstractCommand> command = commands.stream()
                                                     .filter(x->x.getName().equals(commandDescription.getName().getName()))
                                                     .findFirst();

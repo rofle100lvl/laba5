@@ -1,10 +1,9 @@
 package Commands;
 
-import commandDescriptions.AddDescription;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.ExitDescription;
 import utils.CollectionManager;
-import utils.Request;
+import utils.Response;
 
 /**
  * Класс команды выхода из программы
@@ -16,9 +15,9 @@ public class ExitCommand extends AbstractCommand {
 
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         ExitDescription exitDescription = (ExitDescription) commandDescription;
         System.out.println(exitDescription.getName().name());
-        return new Request(200,"ExitCommand");
+        return new Response(200,"ExitCommand");
     }
 }

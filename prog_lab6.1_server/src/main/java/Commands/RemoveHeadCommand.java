@@ -3,8 +3,7 @@ package Commands;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.RemoveHeadDescription;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды, выводящей первый элемент и удаляющей его
@@ -17,8 +16,8 @@ public class RemoveHeadCommand extends AbstractCommand {
 
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         RemoveHeadDescription removeHeadDescription = (RemoveHeadDescription) commandDescription;
-        return new Request(200, getCollectionManager().removeHead());
+        return new Response(200, getCollectionManager().removeHead());
     }
 }

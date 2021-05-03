@@ -2,10 +2,8 @@ package Commands;
 
 import commandDescriptions.CommandDescription;
 import commandDescriptions.PrintFieldDescendingDescription;
-import startClasses.Flat;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды, выводящей значения поля house всех элементов в порядке убывания
@@ -19,11 +17,11 @@ public class PrintFieldDescendingHouseCommand extends AbstractCommand {
 
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         PrintFieldDescendingDescription printFieldDescendingHouseCommand =
                 (PrintFieldDescendingDescription) commandDescription;
         getCollectionManager().sort();
 
-        return new Request(200, getCollectionManager().getFieldDescendingHouse());
+        return new Response(200, getCollectionManager().getFieldDescendingHouse());
     }
 }

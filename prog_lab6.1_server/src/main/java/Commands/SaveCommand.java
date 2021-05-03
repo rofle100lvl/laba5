@@ -2,7 +2,7 @@ package Commands;
 
 import commandDescriptions.CommandDescription;
 import utils.CollectionManager;
-import utils.Request;
+import utils.Response;
 
 /**
  * Класс команды, сохраняющей коллекцию в файл
@@ -15,7 +15,7 @@ public class SaveCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
-        return new Request(200,"Save");
+    public Response execute(CommandDescription commandDescription) {
+        return new Response(200,"Save");
     }
 }

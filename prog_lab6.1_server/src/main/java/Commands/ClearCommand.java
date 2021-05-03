@@ -1,11 +1,9 @@
 package Commands;
 
-import commandDescriptions.AddDescription;
 import commandDescriptions.ClearDescription;
 import commandDescriptions.CommandDescription;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды чистки коллекции
@@ -16,16 +14,16 @@ public class ClearCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         ClearDescription clearDescription = (ClearDescription) commandDescription;
-        Request request;
+        Response response;
         if(getCollectionManager().clear()){
-            request = new Request(200,"Коллекция успешно очищена");
+            response = new Response(200,"Коллекция успешно очищена");
         }
         else {
-            request = new Request(200,"Коллекция пустая");
+            response = new Response(200,"Коллекция пустая");
         }
-        return request;
+        return response;
     }
 
 

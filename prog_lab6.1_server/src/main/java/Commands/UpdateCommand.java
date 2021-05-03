@@ -2,16 +2,8 @@ package Commands;
 
 import commandDescriptions.CommandDescription;
 import commandDescriptions.UpdateIdDescription;
-import startClasses.Coordinates;
-import startClasses.Flat;
-import startClasses.House;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import utils.Response;
 
 /**
  * Класс команды, обновляещей значение элемента коллекции, id которого равен заданному
@@ -25,9 +17,9 @@ public class UpdateCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         UpdateIdDescription updateIdDescription = (UpdateIdDescription) commandDescription;
-        return new Request(200, getCollectionManager().updateId(updateIdDescription.getId(),
+        return new Response(200, getCollectionManager().updateId(updateIdDescription.getId(),
                 updateIdDescription.getFlat()));
     }
 }

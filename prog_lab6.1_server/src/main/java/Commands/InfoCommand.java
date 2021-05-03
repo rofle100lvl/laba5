@@ -3,8 +3,7 @@ package Commands;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.InfoCommandDescription;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды выхода информации о коллекции
@@ -16,8 +15,8 @@ public class InfoCommand extends AbstractCommand{
 
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         InfoCommandDescription infoCommandDescription = (InfoCommandDescription) commandDescription;
-        return new Request(200, getCollectionManager().getInfo());
+        return new Response(200, getCollectionManager().getInfo());
     }
 }

@@ -2,15 +2,8 @@ package Commands;
 
 import commandDescriptions.AddDescription;
 import commandDescriptions.CommandDescription;
-import startClasses.Coordinates;
-import startClasses.Flat;
-import startClasses.House;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
-
-import java.io.BufferedReader;
-import java.io.IOException;
+import utils.Response;
 
 /**
  * Класс команды добавления экземпляра в коллекцию
@@ -21,9 +14,9 @@ public class AddCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         AddDescription addDescription = (AddDescription) commandDescription;
         getCollectionManager().add(addDescription.getFlat());
-        return new Request(201,"Элемент успешно добавлен");
+        return new Response(201,"Элемент успешно добавлен");
     }
 }

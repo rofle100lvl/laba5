@@ -1,16 +1,21 @@
+import exceptions.LimitOfReconnectionsException;
+
 import java.io.IOException;
 import java.io.ObjectOutput;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Socket socket = new Socket("localhost",11953);
-            App app = new App(socket);
+            App app = new App();
             app.run();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (LimitOfReconnectionsException limitOfReconnectionsException) {
+            limitOfReconnectionsException.printStackTrace();
+        } catch (UnknownHostException unknownHostException) {
+            unknownHostException.printStackTrace();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
         }
 
     }

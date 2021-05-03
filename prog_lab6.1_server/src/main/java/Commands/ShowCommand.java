@@ -3,8 +3,7 @@ package Commands;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.ShowCommandDescription;
 import utils.CollectionManager;
-import utils.Request;
-import utils.UserAsker;
+import utils.Response;
 
 /**
  * Класс команды, выводящей элементы коллекции
@@ -16,8 +15,8 @@ public class ShowCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         ShowCommandDescription showCommandDescription = (ShowCommandDescription) commandDescription;
-        return new Request(200, getCollectionManager().show());
+        return new Response(200, getCollectionManager().show());
     }
 }

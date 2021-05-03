@@ -42,11 +42,14 @@ public class App {
         Socket socket = null;
         while (true) {
             try {
+                System.out.println("Ждёт ответ от клиента");
                 socket = serverSocket.accept();
+                System.out.println("Connection произошёл");
                 objectInputStream = new ObjectInputStream(socket.getInputStream());
                 objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 CommandDescription commandDescription = (CommandDescription) objectInputStream.readObject();
                 objectOutputStream.writeObject(commandManager.launchCommand(commandDescription));
+                commandManager.launchCommand(commandDescription).printResponse();
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

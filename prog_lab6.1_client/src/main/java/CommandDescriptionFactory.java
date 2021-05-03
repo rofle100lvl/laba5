@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CommandDescriptionFactory {
+
     public CommandDescription getCommandDescription(String commandName, String arguments) throws
             UnknownCommandNameException, ArgumentsCountException, NumberFormatException {
         CommandName commandNameEnum = CommandName.findByName(commandName);

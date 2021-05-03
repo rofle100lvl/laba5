@@ -1,11 +1,10 @@
 package Commands;
 
-import commandDescriptions.AddDescription;
 import commandDescriptions.CommandDescription;
 import commandDescriptions.FilterLessThanNumberOfRoomsCommandDescription;
 import startClasses.Flat;
 import utils.CollectionManager;
-import utils.Request;
+import utils.Response;
 
 import java.util.stream.Collectors;
 
@@ -19,10 +18,10 @@ public class FilterLessThanNumberOfRoomsCommand extends AbstractCommand {
     }
 
     @Override
-    public Request execute(CommandDescription commandDescription) {
+    public Response execute(CommandDescription commandDescription) {
         FilterLessThanNumberOfRoomsCommandDescription filterLessThanNumberOfRoomsCommandDescription
                 = (FilterLessThanNumberOfRoomsCommandDescription) commandDescription;
-        return new Request(200,
+        return new Response(200,
                 getCollectionManager().getFlats().stream()
                 .filter(x -> x.getNumberOfRooms() < filterLessThanNumberOfRoomsCommandDescription.getNumberOfRooms())
                 .map(Flat::niceToString)
