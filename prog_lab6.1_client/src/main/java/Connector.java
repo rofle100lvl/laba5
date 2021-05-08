@@ -1,14 +1,11 @@
 
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import utils.Response;
 
 import java.io.*;
 import java.net.InetSocketAddress;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
-import java.nio.channels.DatagramChannel;
 import java.nio.channels.SocketChannel;
 
 
@@ -19,6 +16,8 @@ public class Connector {
     ByteArrayOutputStream b1 = new ByteArrayOutputStream(1024);
     ObjectOutputStream outputStream;
     ObjectInput input;
+    boolean isFull;
+    int lastByte;
 
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
@@ -28,7 +27,9 @@ public class Connector {
             serverAddress = new InetSocketAddress("localhost", PORT);
             client = SocketChannel.open(serverAddress);
             client.configureBlocking(false);
+            lastByte = 0;
             outputStream = new ObjectOutputStream(b1);
+            isFull = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,23 +43,37 @@ public class Connector {
             byteBuffer = ByteBuffer.wrap(b1.toByteArray());
             client.write(byteBuffer);
 
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    public static String byteArrayToHex(byte[] a) {
+        StringBuilder sb = new StringBuilder(a.length * 2);
+        for(byte b: a) {
+            sb.append(String.format("%02x ", b));
+        }
+        return sb.toString();
+    }
     public Response receive() {
         try {
-            buffer = new byte[32158];
-            if(client.read(ByteBuffer.wrap(buffer)) == 0) return null;
-            for(int i=0;i<120;i++){
-                System.out.println(buffer[i]+' ');
+            if(isFull){
+                buffer = new byte[2048];
             }
+            lastByte = client.read(ByteBuffer.wrap(buffer, lastByte,1024));
+            if(lastByte == 0)return null;
+            System.out.println(byteArrayToHex(buffer));
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
             System.out.println("Ждёт ответ от сервера");
+            isFull=true;
             return (Response) input.readObject();
 
-        }catch (ClosedByInterruptException ignored){
+        }
+        catch (StreamCorruptedException e){
+            isFull=false;
+            return null;
+        }
+        catch (ClosedByInterruptException ignored){
             return null;
         }
         catch (IOException | ClassNotFoundException e) {

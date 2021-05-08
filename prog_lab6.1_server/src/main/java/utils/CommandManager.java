@@ -67,6 +67,7 @@ public class CommandManager {
         commands.add(exitCommand);
         commands.add(headCommand);
         commands.add(removeHeadCommand);
+        commands.add(printFieldDescendingHouseCommand);
         commands.add(filterLessThanNumberOfRoomsCommand);
     }
 

@@ -80,7 +80,7 @@ public class CollectionManager {
             String firstFlat = flats.get(0).niceToString();
             flats.removeFirst();
             return firstFlat;
-        } catch (NoSuchElementException e) {
+        } catch (IndexOutOfBoundsException e) {
             return "Коллекция пуста";
         }
     }
