@@ -17,6 +17,7 @@ public class AddCommand extends AbstractCommand {
     public Response execute(CommandDescription commandDescription) {
         AddDescription addDescription = (AddDescription) commandDescription;
         getCollectionManager().add(addDescription.getFlat());
+        System.out.println(addDescription.getFlat().niceToString());
         return new Response(201,"Элемент успешно добавлен");
     }
 }

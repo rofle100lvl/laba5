@@ -31,7 +31,7 @@ public class App {
 
     public App() {
         openConnection();
-        collectionManager = new CollectionManager();
+        collectionManager = Parser.fromXmlToObject("collection.xml");
         commandManager = new CommandManager(collectionManager);
         collectionManager.setCommandManager(commandManager);
         work();

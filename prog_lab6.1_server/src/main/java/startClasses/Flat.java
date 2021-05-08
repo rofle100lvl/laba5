@@ -3,7 +3,10 @@ package startClasses;
 import annotations.*;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
+import utils.ZonedDateTimeAdapter;
 
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,20 +15,27 @@ import java.time.format.DateTimeFormatter;
  * Начальный коасс квартир
  */
 
+@XmlType(propOrder = {"name", "coordinates", "area", "numberOfRooms", "price", "balcony", "furnish", "house"})
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class Flat implements Comparable<Flat>, Serializable {
+    @XmlTransient
     private static Long count = 0l;
 
+    @XmlTransient
     @NotNull
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
 
+    @XmlElement
     @NotNull
     @NotEqualString
     private String name; //Поле не может быть null, Строка не может быть пустой
 
     @NotNull
+    @XmlElement
     private Coordinates coordinates; //Поле не может быть null
 
+    @XmlTransient
     private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
 
     @GreaterThan(num=0)
@@ -180,8 +190,7 @@ public class Flat implements Comparable<Flat>, Serializable {
 
     public String niceToString() {
         return "\t\t\t\t\t\tКВАРТUРА " + id + "\n" +
-                "Номер квартиры: " + id +
-                ", имя собственника: " + name +
+                "Номер квартиры: " + name +
                 ", координаты квартиры: (" + coordinates.getX() + ", " + coordinates.getY() + ")" +
                 ",\n время добавления квартиры в коллекцию: " + creationDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm:ss")) +
                 ",\n цена квартиры: " + price  +

@@ -1,8 +1,10 @@
 
 
+import exceptions.LimitOfReconnectionsException;
 import utils.Response;
 
 import java.io.*;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
@@ -12,17 +14,18 @@ import java.nio.channels.SocketChannel;
 public class Connector {
     InetSocketAddress serverAddress;
     SocketChannel client;
-
+    private int reconnectionTimeout = 5;
+    private int maxReconnectionAttempts = 10;
     ByteArrayOutputStream b1 = new ByteArrayOutputStream(1024);
     ObjectOutputStream outputStream;
     ObjectInput input;
     boolean isFull;
-    int lastByte;
+    int lastByte = 0;
 
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
 
-    public Connector(int PORT) {
+    public Connector(int PORT) throws LimitOfReconnectionsException {
         try {
             serverAddress = new InetSocketAddress("localhost", PORT);
             client = SocketChannel.open(serverAddress);
@@ -30,12 +33,16 @@ public class Connector {
             lastByte = 0;
             outputStream = new ObjectOutputStream(b1);
             isFull = true;
-        } catch (IOException e) {
+        }catch (ConnectException e){
+            System.out.println("Не возможно подключиться к серверу");
+            reconnect();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void send(Object data) {
+    public void send(Object data) throws LimitOfReconnectionsException {
         try {
             b1 = new ByteArrayOutputStream(2048);
             outputStream = new ObjectOutputStream(b1);
@@ -45,39 +52,58 @@ public class Connector {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            reconnect();
         }
     }
-    public static String byteArrayToHex(byte[] a) {
-        StringBuilder sb = new StringBuilder(a.length * 2);
-        for(byte b: a) {
-            sb.append(String.format("%02x ", b));
-        }
-        return sb.toString();
-    }
-    public Response receive() {
+
+    private void reconnect() throws LimitOfReconnectionsException {
         try {
-            if(isFull){
-                buffer = new byte[2048];
+            client.close();
+        } catch (IOException | NullPointerException ignored) {
+        }
+        int attempts = 0;
+        while (attempts < maxReconnectionAttempts) {
+            System.out.println("Попытка переподключения...");
+            try {
+                client = SocketChannel.open(serverAddress);
+                client.configureBlocking(false);
+                lastByte = 0;
+                outputStream = new ObjectOutputStream(b1);
+                isFull = true;
+                System.out.println("Подключение восстановлено");
+                return;
+            } catch (IOException ioException) {
+                try {
+                    System.out.println("Ожидаем...");
+                    Thread.sleep(reconnectionTimeout * 1000);
+                    attempts += 1;
+                } catch (InterruptedException ignored) { }
             }
+        }
+        throw new LimitOfReconnectionsException("Время ожидания превышено");
+    }
+
+
+    public Response receive() throws LimitOfReconnectionsException {
+        try {
+            if(isFull) buffer = new byte[2048];
             lastByte = client.read(ByteBuffer.wrap(buffer, lastByte,1024));
             if(lastByte == 0)return null;
-            System.out.println(byteArrayToHex(buffer));
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
             System.out.println("Ждёт ответ от сервера");
-            isFull=true;
+            isFull = true;
+            lastByte = 0;
             return (Response) input.readObject();
-
         }
         catch (StreamCorruptedException e){
             isFull=false;
             return null;
         }
-        catch (ClosedByInterruptException ignored){
+        catch (ClosedByInterruptException | ClassNotFoundException ignored){
             return null;
         }
-        catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        catch (IOException e) {
+            reconnect();
             return null;
         }
 

@@ -17,13 +17,12 @@ import utils.ZonedDateTimeAdapter;
 @XmlRootElement(name = "Flats")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CollectionManager {
-    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
-    @XmlElement(name = "creationCollectionDate")
+    @XmlTransient
     private java.time.ZonedDateTime creationDate;
 
     @XmlElement(name = "flat")
     private LinkedList<Flat> flats = new LinkedList<Flat>();
-
+    @XmlTransient
     private CommandManager commandManager;
 
     public void setCommandManager(CommandManager commandManager) {

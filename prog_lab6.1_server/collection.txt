@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Flats>
-    <creationCollectionDate>2021-05-08 16:15:31</creationCollectionDate>
     <flat>
-        <area>12.0</area>
-        <balcony>true</balcony>
+        <name>1</name>
         <coordinates>
-            <x>0.0</x>
+            <x>11.0</x>
+            <y>12.0</y>
         </coordinates>
-        <furnish>NONE</furnish>
+        <area>2.0</area>
+        <numberOfRooms>3</numberOfRooms>
+        <price>4</price>
+        <balcony>true</balcony>
+        <furnish>FINE</furnish>
         <house>
-            <name>12</name>
-            <numberOfFlatsOnFloor>12</numberOfFlatsOnFloor>
-            <numberOfFloors>12</numberOfFloors>
-            <numberOfLifts>12</numberOfLifts>
-            <year>12</year>
+            <name>6</name>
+            <year>7</year>
+            <numberOfFloors>8</numberOfFloors>
+            <numberOfFlatsOnFloor>9</numberOfFlatsOnFloor>
+            <numberOfLifts>10</numberOfLifts>
         </house>
-        <id>0</id>
-        <name>name</name>
-        <numberOfRooms>12</numberOfRooms>
-        <price>12</price>
     </flat>
-    <commandManager/>
 </Flats>

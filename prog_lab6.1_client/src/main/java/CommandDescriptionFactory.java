@@ -255,7 +255,10 @@ public class CommandDescriptionFactory {
                 System.out.printf("Введите координату x: ");
                 request = reader.readLine();
                 if (request == null) return null;
-                if (validator.validateField(request, coordinates.getClass().getDeclaredField("x"), coordinates)) break;
+                if (validator.validateField(request, coordinates.getClass().getDeclaredField("x"), coordinates)) {
+                    coordinates.setX(Float.parseFloat(request));
+                    break;
+                }
                 else {
                     if (userAsker.isFileMode()) System.out.println();
                     System.out.println("Произошла ошибка при вводе поля. Ожидался Float.");
@@ -267,12 +270,16 @@ public class CommandDescriptionFactory {
                 System.out.printf("Введите координату y: ");
                 request = reader.readLine();
                 if (request == null) return null;
-                if (validator.validateField(request, coordinates.getClass().getDeclaredField("y"), coordinates)) break;
+                if (validator.validateField(request, coordinates.getClass().getDeclaredField("y"), coordinates)) {
+                    coordinates.setY(Float.parseFloat(request));
+                    break;
+                }
                 else {
                     if (userAsker.isFileMode()) System.out.println();
                     System.out.println("Произошла ошибка при вводе поля. Ожидался Float.");
                 }
             }
+            flat.setCoordinates(coordinates.getX(),coordinates.getY());
             if (userAsker.isFileMode()) System.out.println(request);
             return flat;
         } catch (IOException | NoSuchFieldException e) {

@@ -22,7 +22,7 @@ public class App {
         userAsker = new UserAsker(new BufferedReader(new InputStreamReader(System.in)));
         commandDescriptionFactory = new CommandDescriptionFactory(userAsker);
     }
-    public void receive(){
+    public void receive() throws LimitOfReconnectionsException {
         serverResponse = connector.receive();
         if(serverResponse != null){
             serverResponse.printResponse();
@@ -53,6 +53,7 @@ public class App {
                 }
             }
             receive();
+
         }
     }
 
@@ -71,7 +72,7 @@ public class App {
         return words;
     }
 
-    public boolean interactive_run() throws IOException {
+    public boolean interactive_run() throws IOException, LimitOfReconnectionsException {
         while (true) {
                 String s = userAsker.getUserScanner().readLine();
                 if(s == null)return true;
@@ -84,20 +85,17 @@ public class App {
                     CommandDescription commandDescription = commandDescriptionFactory.
                             getCommandDescription(words[0],words[1]);
                     if(commandDescription == null)return false;
-                    connector.send(commandDescriptionFactory.getCommandDescription(words[0], words[1]));
+                    connector.send(commandDescription);
                 } catch (UnknownCommandNameException e) {
                     e.printStackTrace();
                 } catch (ArgumentsCountException e) {
                     e.printStackTrace();
                 }
-            serverResponse = connector.receive();
-            if(serverResponse != null){
-                serverResponse.printResponse();
-            }
+            receive();
         }
     }
 
-    public boolean execute_script(String File) throws IOException {
+    public boolean execute_script(String File) throws IOException, LimitOfReconnectionsException {
         if (!findCycles(File)) return false;
         System.out.println("====  Начало выполнения скрипта по адресу " + File + "  ====");
         try {

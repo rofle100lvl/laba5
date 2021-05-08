@@ -55,7 +55,8 @@ public class Parser {
      */
     public static void convertObjectToXml(CollectionManager flats, String filePath) {
         try {
-            JAXBContext context = JAXBContext.newInstance(CollectionManager.class, Flat.class, Coordinates.class);
+            JAXBContext context = JAXBContext.newInstance(CollectionManager.class, Flat.class, Coordinates.class,
+                    House.class);
             Marshaller marshaller = context.createMarshaller();
             // устанавливаем флаг для читабельного вывода XML в JAXB
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
