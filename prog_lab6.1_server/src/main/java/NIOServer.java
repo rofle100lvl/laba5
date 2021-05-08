@@ -41,7 +41,6 @@ public class NIOServer {
         selector = Selector.open();
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
 
-
         while (true) {
             selector.select();
             for (SelectionKey key : selector.selectedKeys()) {
@@ -54,43 +53,50 @@ public class NIOServer {
                             socketChannel.register(selector, SelectionKey.OP_READ);
                         } else if (key.isReadable()) {
                             SocketChannel socketChannel = (SocketChannel) key.channel();
-                            byte[] buffer = new byte[2048];
-                            int bytesRead = socketChannel.read(ByteBuffer.wrap(buffer));
-                            log("Reading from " + socketChannel.getRemoteAddress() + ", bytes read=" + bytesRead);
+                            try {
+                                byte[] buffer = new byte[2048];
+                                int bytesRead = socketChannel.read(ByteBuffer.wrap(buffer));
+                                log("Reading from " + socketChannel.getRemoteAddress() + ", bytes read=" + bytesRead);
 
-                            if (bytesRead == -1) {
-                                log("Connection closed " + socketChannel.getRemoteAddress());
-                                sockets.remove(socketChannel);
-                                socketChannel.close();
-                            }
+                                if (bytesRead == -1) {
+                                    log("Connection closed " + socketChannel.getRemoteAddress());
+                                    sockets.remove(socketChannel);
+                                    socketChannel.close();
+                                }
 
-                            ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream
-                                    (buffer));
-                             sockets.put(socketChannel, (CommandDescription) objectInputStream.readObject());
-                            // Detecting end of the message
-                            if (bytesRead > 0) {
+                                ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream
+                                        (buffer));
+                                sockets.put(socketChannel, (CommandDescription) objectInputStream.readObject());
+                                // Detecting end of the message
                                 socketChannel.register(selector, SelectionKey.OP_WRITE);
+                            }catch (IOException ignored){
+                                socketChannel.close();
+                                System.out.println("Подключение с клиентом разорвано");
                             }
+
                         } else if (key.isWritable()) {
                             SocketChannel socketChannel = (SocketChannel) key.channel();
                             byte[] buffer = new byte[1024];
                             Response response = commandManager.launchCommand(sockets.get(socketChannel));
 
                             // делаем ответ
-                            ByteArrayOutputStream b1 = new ByteArrayOutputStream(2048);
-                            ObjectOutputStream outputStream = new ObjectOutputStream(b1);
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(2048);
+                            ObjectOutputStream outputStream = new ObjectOutputStream(byteArrayOutputStream);
+
                             outputStream.writeObject(response);
-                            ByteBuffer byteBuffer = ByteBuffer.wrap(b1.toByteArray());
+                            ByteBuffer byteBuffer = ByteBuffer.wrap(byteArrayOutputStream.toByteArray());
+
                             int bytesWritten = socketChannel.write(byteBuffer);
                             log("Writing to " + socketChannel.getRemoteAddress() + ", bytes written=" + bytesWritten);
-                            if(sockets.get(socketChannel).getName()== CommandName.EXIT){
+
+                            if (sockets.get(socketChannel).getName() == CommandName.EXIT){
                                 socketChannel.close();
+                                continue;
                             }
                             socketChannel.register(selector, SelectionKey.OP_READ);
                         }
                     } catch (IOException | ClassNotFoundException e) {
                         log("Клиент отключился от сервера");
-
                         e.printStackTrace();
                     }
                 }
@@ -98,15 +104,6 @@ public class NIOServer {
 
             selector.selectedKeys().clear();
         }
-    }
-    public void reconnect() throws IOException {
-        selector.close();
-        serverChannel.close();
-        serverChannel = ServerSocketChannel.open();
-        serverChannel.socket().bind(new InetSocketAddress(45001));
-        serverChannel.configureBlocking(false);
-        selector = Selector.open();
-        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
     }
 
     private static void log(String message) {

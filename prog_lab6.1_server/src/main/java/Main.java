@@ -1,5 +1,3 @@
-import utils.App;
-
 import java.io.IOException;
 
 public class Main {
