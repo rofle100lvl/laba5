@@ -40,7 +40,7 @@ public class NIOServer {
     public void run() throws IOException {
         selector = Selector.open();
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
-
+        log("Сервер начал свою работу");
         while (true) {
             selector.select();
             for (SelectionKey key : selector.selectedKeys()) {
@@ -57,21 +57,15 @@ public class NIOServer {
                                 byte[] buffer = new byte[2048];
                                 int bytesRead = socketChannel.read(ByteBuffer.wrap(buffer));
                                 log("Reading from " + socketChannel.getRemoteAddress() + ", bytes read=" + bytesRead);
-
-                                if (bytesRead == -1) {
-                                    log("Connection closed " + socketChannel.getRemoteAddress());
-                                    sockets.remove(socketChannel);
-                                    socketChannel.close();
-                                }
-
                                 ObjectInputStream objectInputStream = new ObjectInputStream(new ByteArrayInputStream
                                         (buffer));
                                 sockets.put(socketChannel, (CommandDescription) objectInputStream.readObject());
                                 // Detecting end of the message
                                 socketChannel.register(selector, SelectionKey.OP_WRITE);
                             }catch (IOException ignored){
+                                sockets.remove(socketChannel);
+                                log(String.format("Подключение с клиентом %s разорвано",  socketChannel.getRemoteAddress()));
                                 socketChannel.close();
-                                System.out.println("Подключение с клиентом разорвано");
                             }
 
                         } else if (key.isWritable()) {
@@ -96,8 +90,7 @@ public class NIOServer {
                             socketChannel.register(selector, SelectionKey.OP_READ);
                         }
                     } catch (IOException | ClassNotFoundException e) {
-                        log("Клиент отключился от сервера");
-                        e.printStackTrace();
+                        log(e.getMessage());
                     }
                 }
             }
@@ -107,6 +100,6 @@ public class NIOServer {
     }
 
     private static void log(String message) {
-        System.out.println("[" + Thread.currentThread().getName() + "] " + message);
+        ServerLogger.logger.info("[" + Thread.currentThread().getName() + "] " + message);
     }
 }

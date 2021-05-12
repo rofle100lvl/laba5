@@ -7,7 +7,10 @@ import utils.Response;
 import utils.UserAsker;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
+import java.util.Locale;
+import java.util.Properties;
 import java.util.Stack;
 
 public class App {
@@ -18,10 +21,12 @@ public class App {
     private UserAsker userAsker;
 
     public App() throws LimitOfReconnectionsException, UnknownHostException {
-        connector = new Connector(45001);
         userAsker = new UserAsker(new BufferedReader(new InputStreamReader(System.in)));
+        ConnectorFabric connectorFabric = new ConnectorFabric(userAsker);
+        connector = connectorFabric.getConnector();
         commandDescriptionFactory = new CommandDescriptionFactory(userAsker);
     }
+
     public void receive() throws LimitOfReconnectionsException {
         serverResponse = connector.receive();
         if(serverResponse != null){

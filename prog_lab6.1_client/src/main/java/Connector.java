@@ -6,14 +6,17 @@ import utils.Response;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedByInterruptException;
 import java.nio.channels.SocketChannel;
+import java.util.Properties;
 
 
 public class Connector {
     InetSocketAddress serverAddress;
     SocketChannel client;
+    private int PORT;
     private int reconnectionTimeout = 5;
     private int maxReconnectionAttempts = 10;
     ByteArrayOutputStream b1 = new ByteArrayOutputStream(1024);
@@ -25,7 +28,7 @@ public class Connector {
     ByteBuffer byteBuffer;
     byte[] buffer = new byte[1024];
 
-    public Connector(int PORT) throws LimitOfReconnectionsException {
+    private void connect() throws LimitOfReconnectionsException{
         try {
             serverAddress = new InetSocketAddress("localhost", PORT);
             client = SocketChannel.open(serverAddress);
@@ -40,6 +43,19 @@ public class Connector {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Connector(Properties properties) throws LimitOfReconnectionsException{
+
+        connect();
+
+    }
+
+    public Connector(int PORT, int reconnectionTimeout, int maxReconnectionAttempts) throws LimitOfReconnectionsException {
+        this.PORT = PORT;
+        this.reconnectionTimeout = reconnectionTimeout;
+        this.maxReconnectionAttempts = maxReconnectionAttempts;
+        connect();
     }
 
     public void send(Object data) throws LimitOfReconnectionsException {
