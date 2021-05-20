@@ -16,7 +16,7 @@ import java.util.Properties;
 public class Connector {
     InetSocketAddress serverAddress;
     SocketChannel client;
-    private int PORT;
+    private int PORT = 41005;
     private int reconnectionTimeout = 5;
     private int maxReconnectionAttempts = 10;
     ByteArrayOutputStream b1 = new ByteArrayOutputStream(1024);
@@ -45,14 +45,13 @@ public class Connector {
         }
     }
 
-    public Connector(Properties properties) throws LimitOfReconnectionsException{
-
-        connect();
-
-    }
 
     public Connector(int PORT, int reconnectionTimeout, int maxReconnectionAttempts) throws LimitOfReconnectionsException {
-        this.PORT = PORT;
+        if (PORT <= 0 || PORT >=65536){
+            System.out.println("PORT должен быть в промежутке [0;65536]. Будет использован порт по умолчанию - 41005");
+        }else {
+            this.PORT = PORT;
+        }
         this.reconnectionTimeout = reconnectionTimeout;
         this.maxReconnectionAttempts = maxReconnectionAttempts;
         connect();
@@ -106,7 +105,6 @@ public class Connector {
             lastByte = client.read(ByteBuffer.wrap(buffer, lastByte,1024));
             if(lastByte == 0)return null;
             input = new ObjectInputStream(new ByteArrayInputStream(buffer));
-            System.out.println("Ждёт ответ от сервера");
             isFull = true;
             lastByte = 0;
             return (Response) input.readObject();

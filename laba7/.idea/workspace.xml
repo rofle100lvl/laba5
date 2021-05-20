@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a915c071-f942-415b-8209-15c89c0c17b0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../prog_lab6.1_server/collection.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../prog_lab6.1_server/server.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_client/outputData.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_client/src/main/java/Connector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_client/src/main/java/Connector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/collection.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/Commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/Commands/ExitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/NIOServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/utils/NIOServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/ServerLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/support/ServerLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/exceptions/ArgumentsCountException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/utils/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/utils/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/java/utils/UserAsker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../prog_lab6.1_server/src/main/server.properties" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1sc3h63mt2BG6qjUOrkqVR1b8hL" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/prog_lab7.1_server" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a915c071-f942-415b-8209-15c89c0c17b0" name="Default Changelist" comment="" />
+      <created>1621158169324</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1621158169324</updated>
+      <workItem from="1621158170537" duration="198000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -86,17 +86,20 @@ public class ConnectorFabric {
     public Connector getConnector()  {
         System.out.println("Хотите взять данные из файла config.properties? (да/нет)");
         try {
-            if(userAsker.getUserScanner().readLine().toLowerCase().equals("да")){
-                try {
-                    return getPropertiesConnector(loadProperties());
-                }
-                catch (LimitOfReconnectionsException | NumberFormatException | NullPointerException e){
-                    System.out.println("Файл повреждён или недоступен, пожалуйста введите в ручную");
+            String answer =userAsker.getUserScanner().readLine().toLowerCase();
+            while (true) {
+                if (answer.equals("да")) {
+                    try {
+                        return getPropertiesConnector(loadProperties());
+                    } catch (LimitOfReconnectionsException | NumberFormatException | NullPointerException e) {
+                        System.out.println("Файл повреждён или недоступен, пожалуйста введите в ручную");
+                        return getInputConnector();
+                    }
+                } else if (answer.equals("нет")){
                     return getInputConnector();
                 }
-            }
-            else{
-                return getInputConnector();
+                System.out.println("Ответьте да или нет");
+                answer =userAsker.getUserScanner().readLine().toLowerCase();
             }
         } catch (IOException ignored) { }
         return null;

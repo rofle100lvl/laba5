@@ -2,6 +2,7 @@ package utils;
 
 import javax.xml.bind.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,8 +29,7 @@ public class Parser {
      * @param filePath Путь к файлу
      * @return Класс, содержащий коллекцию элементов
      */
-    public static CollectionManager fromXmlToObject(String filePath) {
-        try {
+    public static CollectionManager fromXmlToObject(String filePath) throws IOException, JAXBException, IllegalAccessException {
             // создаем объект JAXBContext - точку входа для JAXB
             JAXBContext jaxbContext = JAXBContext.newInstance(CollectionManager.class);
             Unmarshaller un = jaxbContext.createUnmarshaller();
@@ -42,10 +42,6 @@ public class Parser {
                 }
             }
             return flats;
-        } catch (JAXBException | IllegalAccessException e) {
-            System.out.println("Стартовый файл не найден или нарушены права доступа");
-        }
-        return null;
     }
 
     /**
